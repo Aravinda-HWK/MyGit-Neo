@@ -128,17 +128,6 @@ public class Neo {
         System.out.println("Commit successfully created: " + commitHash);
     }
 
-    private void createFileIfNotExists(String filePath, String content) throws IOException {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write(content);
-            }
-        } else {
-            System.out.println("Repository already exists.");
-        }
-    }
-
     public void log() throws IOException {
         System.out.println("Fetching commit logs...");
 
@@ -239,6 +228,17 @@ public class Neo {
             } else {
                 System.out.println("First commit.");
             }
+        }
+    }
+
+    private void createFileIfNotExists(String filePath, String content) throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(content);
+            }
+        } else {
+            System.out.println("Repository already exists.");
         }
     }
 
