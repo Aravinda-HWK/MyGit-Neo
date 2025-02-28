@@ -76,6 +76,25 @@ public class Neo {
         updateStagingArea(fileToBeAdded, fileHash);
     }
 
+    public void addAll() throws IOException, NoSuchAlgorithmException {
+        // List of files/folders to exclude
+        List<String> excludeList = List.of("Neo.java", "Neo.class", "Main.java", "Main.class", "neo", ".gitignore",
+                "README.md");
+
+        Files.walk(Paths.get("."))
+                .filter(Files::isRegularFile) // Only regular files
+                .filter(file -> file.toString().endsWith(".txt")) // Only .txt files
+                .filter(file -> excludeList.stream().noneMatch(excluded -> file.endsWith(excluded))) // Exclude listed
+                                                                                                     // files
+                .forEach(file -> {
+                    try {
+                        add(file.toString()); // Call add() on allowed files
+                    } catch (IOException | NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
     public void commit(String message) throws IOException, NoSuchAlgorithmException {
         System.out.println("Committing changes...");
 

@@ -13,12 +13,31 @@ public class Main {
                     return;
                 }
                 if (args[0].equals("add")) {
-                    try {
-                        repo.add(args[1]);
-                    } catch (IOException | NoSuchAlgorithmException e) {
-                        e.printStackTrace();
+                    int numberOfArgs = args.length;
+                    if (numberOfArgs < 2) {
+                        System.out.println("Usage: neo add <file>");
+                        return;
                     }
-                    return;
+                    if (numberOfArgs >= 2) {
+                        if (args[1].equals(".")) {
+                            try {
+                                repo.addAll();
+                            } catch (IOException | NoSuchAlgorithmException e) {
+                                e.printStackTrace();
+                            }
+                            return;
+                        } else {
+                            for (int i = 1; i < numberOfArgs; i++) {
+                                try {
+                                    repo.add(args[i]);
+                                } catch (IOException | NoSuchAlgorithmException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            return;
+                        }
+
+                    }
                 }
                 if (args[0].equals("commit")) {
                     try {
